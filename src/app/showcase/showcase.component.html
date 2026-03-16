@@ -1,0 +1,57 @@
+<div class="showcase-container">
+  <!-- Navigation -->
+  <nav class="navigation" [class.hidden]="!showNavigation">
+    <div class="nav-left">
+      <a routerLink="/" class="logo">ROCKETREALM</a>
+    </div>
+    <div class="nav-right">
+      <a href="https://instagram.com/jaghan" target="_blank" rel="noopener noreferrer" class="nav-link">
+        Instagram ↗
+      </a>
+      <a href="https://jaghan.com" target="_blank" rel="noopener noreferrer" class="nav-link">
+        Back to jaghan.com ↗
+      </a>
+    </div>
+  </nav>
+
+  <!-- Floating Instagram Icon -->
+  <a href="https://www.instagram.com/rocketrealm/" target="_blank" rel="noopener noreferrer" class="floating-instagram">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+    </svg>
+  </a>
+
+  <!-- Main Content -->
+  <main class="showcase-content">
+    <div *ngFor="let image of images; let i = index" class="image-card">
+      <div class="image-wrapper" (click)="openLightbox(image)">
+        <img [src]="image.src" [alt]="image.title || 'Aviation photography'" loading="lazy">
+      </div>
+      <div class="metadata">
+        <div *ngIf="image.location" class="metadata-item">{{ image.location }}</div>
+        <div *ngIf="image.date" class="metadata-item">{{ image.date }}</div>
+        <div *ngIf="image.aircraft" class="metadata-item">{{ image.aircraft }}</div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Lightbox -->
+  <div class="lightbox" [class.open]="lightboxOpen" (click)="closeLightbox()" *ngIf="lightboxOpen && selectedImage">
+    <button class="lightbox-close" (click)="closeLightbox()">×</button>
+    <button class="lightbox-nav lightbox-prev" (click)="navigateImage('prev', $event)">‹</button>
+    <button class="lightbox-nav lightbox-next" (click)="navigateImage('next', $event)">›</button>
+    
+    <div class="lightbox-content" (click)="$event.stopPropagation()">
+      <img [src]="selectedImage.src" [alt]="selectedImage.title || 'Aviation photography'">
+      <div class="lightbox-metadata">
+        <div *ngIf="selectedImage.location" class="metadata-item">{{ selectedImage.location }}</div>
+        <div *ngIf="selectedImage.date" class="metadata-item">{{ selectedImage.date }}</div>
+        <div *ngIf="selectedImage.aircraft" class="metadata-item">{{ selectedImage.aircraft }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grain-overlay"></div>
+</div>
